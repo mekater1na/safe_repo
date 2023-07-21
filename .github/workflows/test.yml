@@ -16,7 +16,7 @@ jobs:
     name: Classroom test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
        
       - name: Setup Java JDK
         uses: actions/setup-java@v3
@@ -25,19 +25,19 @@ jobs:
             java-version: '17'
        
       - name: Split PR Url
-            uses: jungwinter/split@v2
-            id: split
-            with:
-                msg: '${{env.pull_req_url}}'
-                separator: '://'
+        uses: jungwinter/split@v2
+        id: split
+        with:
+            msg: '${{env.pull_req_url}}'
+            separator: '://'
                 
       - name: Clone tests if exist
-            run: |
-                tree
-                sudo git clone https://github.com/QA-Fullstack-SDET/blc_3_test task_repo
-                sudo chmod -R 777 ./task_repo
-                cp -R task_repo/. .
-                tree
+        run: |
+            tree
+            sudo git clone https://github.com/QA-Fullstack-SDET/blc_3_test task_repo
+            sudo chmod -R 777 ./task_repo
+            cp -R task_repo/. .
+            tree
        
       - name: Clone student repo
         run: |
