@@ -1,5 +1,4 @@
-on:
-    repository_dispatch:
+on: workflow_dispatch
  
 env:                                                               
     pull_req_url: 'https://github.com/QA-Fullstack-SDET/3-sdet-blc-pyefremov'
