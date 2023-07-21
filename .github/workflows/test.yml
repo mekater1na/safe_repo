@@ -1,7 +1,6 @@
     name: GitHub Classroom Workflow
 
-    on: 
-        repository_dispatch:
+    on: workflow_dispatch
     
     env:
         pull_req_url: 'https://github.com/QA-Fullstack-SDET/8-sdet-blc-Maxon3327'
