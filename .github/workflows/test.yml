@@ -33,7 +33,7 @@ jobs:
       - name: Clone tests if exist
         run: |
             tree
-            sudo git clone https://github.com/QA-Fullstack-SDET/blc_3_test task_repo
+            sudo git clone --depth 1 https://mekater1na:${{ env.github_token }}@github.com/QA-Fullstack-SDET/blc_3_test task_repo
             sudo chmod -R 777 ./task_repo
             cp -R task_repo/. .
             tree
