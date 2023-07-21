@@ -1,42 +1,53 @@
-on: workflow_dispatch
- 
-env:                                                               
-    pull_req_url: 'https://github.com/QA-Fullstack-SDET/3-sdet-blc-pyefremov'
-    token: ${{github.event.client_payload.token_csrf}}
-    github_token: ${{github.event.client_payload.github_token}}
-    task_id: ${{github.event.client_payload.task_id}}
-    adapter_url: ${{github.event.client_payload.adapter_url}}
-    TEACHER_USER: ${{secrets.TEACHER_USER}}
-    TEACHER_TOKEN: ${{secrets.TEACHER_TOKEN}}
-    task_score: 50
-    max_score: 100
-    status: Done
- 
-jobs:
-  build:
-    name: Classroom test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-       
-      - name: Setup Java JDK
-        uses: actions/setup-java@v3
-        with:
-            distribution: 'corretto'
-            java-version: '17'
-       
-      - name: Split PR Url
-        uses: jungwinter/split@v2
-        id: split
-        with:
-            msg: '${{env.pull_req_url}}'
-            separator: '://'
-                
-      - name: Clone tests if exist
-        run: |
-            tree
-            sudo git clone https://mekater1na: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@github.com/QA-Fullstack-SDET/blc_03_test task_repo
-            sudo chmod -R 777 ./task_repo
-            cp -R task_repo/. .
-            tree
-     
+    name: GitHub Classroom Workflow
+
+    on: 
+        repository_dispatch:
+    
+    env:
+        pull_req_url: 'https://github.com/QA-Fullstack-SDET/8-sdet-blc-Maxon3327'
+        token: ${{github.event.client_payload.token_csrf}} 
+        github_token: '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'
+        task_id: ${{github.event.client_payload.task_id}} 
+        adapter_url: ${{github.event.client_payload.adapter_url}}
+        task_score: 50
+        max_score: 100
+        status: Done
+  
+    jobs:
+      build:
+        name: Classroom test
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v2
+          
+          - name: Setup Java JDK
+            uses: actions/setup-java@v3
+            with:
+                distribution: 'corretto'
+                java-version: '17'
+          
+          - name: Split PR Url
+            uses: jungwinter/split@v2
+            id: split
+            with:
+                msg: '${{env.pull_req_url}}'
+                separator: '://'
+          
+          - name: Clone student repo
+            run: |
+                tree
+                sudo git clone https://mekater1na:${{ env.github_token }}@${{ steps.split.outputs._1 }} student_work
+                sudo chmod -R 777 ./student_work
+                tree 
+          
+          - name: Gradle Build
+            working-directory: student_work
+            run: gradle build -Dfile.encoding=UTF-8
+          
+          - name: Gradle Test
+            working-directory: student_work
+            run: gradle test
+            
+          - name: Update score
+            if: ${{ success() }}
+            run: echo "task_score=100" >> $GITHUB_ENV
