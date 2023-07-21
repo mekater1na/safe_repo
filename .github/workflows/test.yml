@@ -35,27 +35,8 @@ jobs:
       - name: Clone tests if exist
         run: |
             tree
-            sudo git clone https://mekater1na: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@github.com/QA-Fullstack-SDET/blc_03_test task_repo
+            sudo git clone https://mekater1na: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@github.com/QA-Fullstack-SDET/blc_03_test task_repo
             sudo chmod -R 777 ./task_repo
             cp -R task_repo/. .
             tree
-       
-      - name: Clone student repo
-        run: |
-            tree
-            sudo git clone https://mekater1na:${{ env.github_token }}@${{ steps.split.outputs._1 }} student_work
-            sudo chmod -R 777 ./student_work
-            tree
-       
-      - name: Gradle Build
-        working-directory: student_work
-        run: gradle build -Dfile.encoding=UTF-8
-       
-      - name: Gradle Test
-        working-directory: student_work
-        run: gradle test
-         
-      - name: Update score
-        if: ${{ success() }}
-        run: echo "task_score=100" >> $GITHUB_ENV
      
