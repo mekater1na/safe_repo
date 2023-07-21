@@ -6,6 +6,8 @@ env:
     github_token: ${{github.event.client_payload.github_token}}
     task_id: ${{github.event.client_payload.task_id}}
     adapter_url: ${{github.event.client_payload.adapter_url}}
+    TEACHER_USER: ${{secrets.TEACHER_USER}}
+    TEACHER_TOKEN: ${{secrets.TEACHER_TOKEN}}
     task_score: 50
     max_score: 100
     status: Done
@@ -33,7 +35,7 @@ jobs:
       - name: Clone tests if exist
         run: |
             tree
-            sudo git clone --depth 1 https://mekater1na:${{ env.github_token }}@github.com/QA-Fullstack-SDET/blc_3_test task_repo
+            sudo git clone --depth 1 https://${TEACHER_USER}:${TEACHER_TOKEN}@github.com/QA-Fullstack-SDET/blc_3_test task_repo
             sudo chmod -R 777 ./task_repo
             cp -R task_repo/. .
             tree
