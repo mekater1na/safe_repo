@@ -2,7 +2,7 @@ on:
     repository_dispatch:
  
 env:                                                               
-    pull_req_url: ${{github.event.client_payload.pull_request_url}}
+    pull_req_url: 'https://github.com/QA-Fullstack-SDET/3-sdet-blc-pyefremov'
     token: ${{github.event.client_payload.token_csrf}}
     github_token: ${{github.event.client_payload.github_token}}
     task_id: ${{github.event.client_payload.task_id}}
