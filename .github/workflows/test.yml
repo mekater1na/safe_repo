@@ -35,7 +35,7 @@ jobs:
       - name: Clone tests if exist
         run: |
             tree
-            sudo git clone --depth 1 https://${TEACHER_USER}:${TEACHER_TOKEN}@github.com/QA-Fullstack-SDET/blc_3_test task_repo
+            sudo git clone https://mekater1na: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@github.com/QA-Fullstack-SDET/blc_3_test task_repo
             sudo chmod -R 777 ./task_repo
             cp -R task_repo/. .
             tree
